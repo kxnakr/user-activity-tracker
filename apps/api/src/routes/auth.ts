@@ -11,7 +11,7 @@ const MIN_PASSWORD_LENGTH = 8
 
 const registerSchema = z.object({
   name: z.string().trim().min(1, 'Name is required'),
-  email: z.string().trim().email('Invalid email format'),
+  email: z.email('Invalid email format').trim(),
   password: z.string().min(MIN_PASSWORD_LENGTH, 'Password is too short'),
 })
 
