@@ -25,6 +25,8 @@ services:
       dockerfile: apps/web/Dockerfile
       args:
         VITE_API_URL: /api
+    expose:
+      - "3000"
     networks:
       - internal
 
@@ -38,9 +40,18 @@ services:
       - "443:443"
     volumes:
       - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
     networks:
       - internal
+      - public
 
 networks:
   internal:
     internal: true
+  public:
+    driver: bridge
+
+volumes:
+  caddy_data:
+  caddy_config:
