@@ -1,0 +1,8 @@
+uat.kxna.space {
+  encode gzip
+
+  @api path /api/*
+  reverse_proxy @api api:8000
+
+  reverse_proxy web:3000
+}

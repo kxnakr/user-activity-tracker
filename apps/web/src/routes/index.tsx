@@ -1,39 +1,51 @@
-import { createFileRoute } from '@tanstack/react-router'
-import logo from '../logo.svg'
+import { createFileRoute, Link } from '@tanstack/react-router'
+
+import PageShell from '@/components/PageShell'
+import { useAuth } from '@/lib/auth'
 
 export const Route = createFileRoute('/')({
-  component: App,
+  component: Landing,
 })
 
-function App() {
+function Landing() {
+  const { token } = useAuth()
+
   return (
-    <div className="text-center">
-      <header className="min-h-screen flex flex-col items-center justify-center bg-[#282c34] text-white text-[calc(10px+2vmin)]">
-        <img
-          src={logo}
-          className="h-[40vmin] pointer-events-none animate-[spin_20s_linear_infinite]"
-          alt="logo"
-        />
-        <p>
-          Edit <code>src/routes/index.tsx</code> and save to reload.
+    <PageShell title="" description="">
+      <div className="flex flex-col items-center text-center mt-20">
+        <h2 className="text-4xl font-semibold text-balance md:text-5xl">
+          User Activity Tracker
+        </h2>
+        <p className="mt-4 max-w-2xl text-base text-slate-600 text-pretty md:text-lg">
+          Monitor user actions, catch suspicious behavior, and validate replay
+          protection in one place.
         </p>
-        <a
-          className="text-[#61dafb] hover:underline"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-        <a
-          className="text-[#61dafb] hover:underline"
-          href="https://tanstack.com"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn TanStack
-        </a>
-      </header>
-    </div>
+        <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
+          {token ? (
+            <Link
+              to="/dashboard"
+              className="rounded-full border border-slate-900 bg-slate-900 px-5 py-2 text-sm font-semibold text-white"
+            >
+              Go to dashboard
+            </Link>
+          ) : (
+            <>
+              <Link
+                to="/login"
+                className="rounded-full border border-slate-900 bg-slate-900 px-5 py-2 text-sm font-semibold text-white"
+              >
+                Login
+              </Link>
+              <Link
+                to="/register"
+                className="rounded-full border border-slate-200 px-5 py-2 text-sm font-semibold text-slate-700"
+              >
+                Create account
+              </Link>
+            </>
+          )}
+        </div>
+      </div>
+    </PageShell>
   )
 }
